@@ -5,7 +5,40 @@ function init() {
         el: "#app",
         data: {
 
-            "music" : []
+            "music" : [],
+            "allGenres" : [],
+            "filterKey" : ""
+        },
+
+        methods: {
+
+            getGenres: function() {
+
+                this.music.forEach(song => {
+
+                    const genre = song.genre;
+                    if (!this.allGenres.includes(genre))
+                        this.allGenres.push(genre)
+                });
+            },
+
+            filterByGenre: function() {
+
+                axios
+                    .get("db/data.php", {
+                        params : {
+                            "filter" : this.filterKey
+                        }
+                    })
+                    .then(data => {
+
+                        this.music = data.data;
+                    })
+                    .catch(() => {
+
+                        console.log("Error!")
+                    })
+            }
         },
 
         mounted() {
@@ -15,14 +48,13 @@ function init() {
                 .then(data => {
 
                     this.music = data.data;
+                    this.getGenres();
                 })
                 .catch(() => {
 
                     console.log("Error!")
                 })
         }
-
-    
     })
 }
 

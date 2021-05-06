@@ -23,7 +23,15 @@
 <body> 
     
     <div class="container">
+        
         <div id="app" class="music-library">
+            <div id="menu">
+                <select v-model="filterKey" @change="filterByGenre">
+                    <option value="" selected>All</option>
+                    <option v-for="genre in allGenres">{{ genre }}</option>
+                </select>
+            </div>
+
             <div id="wrapper-songs">
                 <div class="song" v-for="song in music">
                     <div class="song-cover">

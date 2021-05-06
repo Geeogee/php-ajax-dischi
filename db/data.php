@@ -1,5 +1,5 @@
 <?php
-    header('Content-Type: application/json');
+    // header('Content-Type: application/json');
     
     $db = [
         [
@@ -73,6 +73,23 @@
             "year" => "1987"
         ]
     ];
+    
+    $filterKey = $_GET['filter'];
+    
+    if ($filterKey == "") {
+        echo json_encode($db);
+    } else {
 
-    echo json_encode($db);
+        $filteredDb = [];
+        foreach($db as $song) {
+
+            if($song['genre'] == $filterKey) {
+                
+                $filteredDb []= $song;
+            }
+        }
+
+        echo json_encode($filteredDb);
+    }
+    
 ?>
